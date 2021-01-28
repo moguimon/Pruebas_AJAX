@@ -1,5 +1,4 @@
 // definimos las variables que vamos a usar
-import Math;
 
 var estados=["No inicializada","Cargando","Cargado","Interactivo","Completada"] // Estados de la petición
 var tiempo_inic=0;
