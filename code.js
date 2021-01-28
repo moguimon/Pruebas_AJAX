@@ -1,9 +1,9 @@
 // Se quitan los caracteres especiales
-/*
+
 String.prototype.transformaCaracteresEspeciales = function() {
 	unescape(escape(this).replace(/%0A/g, '<br/>').replace(/%3C/g, '&lt;').replace(/%3E/g, '&gt;'));
 }
-*/
+
 
 	var estados = ['No inicializado', 'Cargando', 'Cargado', 'Interactivo', 'Completado'];
 	var tiempo_inic = 0;
@@ -48,7 +48,7 @@ function muestra_contenido() {
 	if(solicitud.readyState == 4) {
 		if(peticion.status == 200) {
 			var contenidos = document.getElementById('contenidos');
-			contenidos.innerHTML = solicitud.responseText//.transformaCaracteresEspeciales();
+			contenidos.innerHTML = solicitud.responseText.transformaCaracteresEspeciales();
 		}
 		muestra_cabeceras();
 		muestra_estado();
@@ -57,7 +57,7 @@ function muestra_contenido() {
 	
 function muestra_cabeceras() {
 	var cabeceras = document.getElementById('cabeceras');
-	cabeceras.innerHTML = solicitud.getAllResponseHeaders()//.transformaCaracteresEspeciales();
+	cabeceras.innerHTML = solicitud.getAllResponseHeaders().transformaCaracteresEspeciales();
 }
 	
 function muestra_estado() {
