@@ -1,7 +1,7 @@
 // Se quitan los caracteres especiales
 
-String.prototype.transformaCaracteresEspeciales = function() {
-	unescape(escape(this).replace(/%0A/g, '<br/>').replace(/%3C/g, '&lt;').replace(/%3E/g, '&gt;'));
+String.prototype.transformaCaracteresEspeciales = function(){
+	return unescape(escape(this).replace(/%0A/g, '<br/>').replace(/%3C/g, '&lt;').replace(/%3E/g, '&gt;'));
 }
 
 
