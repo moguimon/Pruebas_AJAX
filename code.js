@@ -1,52 +1,70 @@
-// definimos las variables que vamos a usar
-
-var estados=["No inicializada","Cargando","Cargado","Interactivo","Completada"] // Estados de la petición
-var tiempo_inic=0;
-
-window.onload= function(){
-	var recurso=document.getElementById("recurso");
-	recurso.value=location.href;
-	document.getElementById("enviar").onclick = carga_contenido;// Cargar la URL al hacer click al botón enviar
+// Se quitan los caracteres especiales
+String.prototype.transformaCaracteresEspeciales = function() {
+		return unescape(escape(this).
+            replace(/%0A/g, '<br/>').
+            replace(/%3C/g, '&lt;').
+            replace(/%3E/g, '&gt;'));
 }
+	var states = ['No inicializado', 'Cargando', 'Cargado', 'Interactivo', 'Completado'];
+	var initTime = 0;
+  
+	window.onload = function() {
+		// Cargar la URL de la página en el campo Text
+		var recurso = document.getElementById('recurso');
+		recurso.value = location.href;
 
-// Cargo los datos datos en cada div, modificando el DOM
-function carga_contenido() {
-	//limpio los contenedores
-	document.getElementById("contenidos").innerHTML="";
-	document.getElementById("cabeceras").innerHTML="";
-	//document.getElementById("estados").innerHTML="";
-	//document.getElementById("codigo").innerHTML="";
+		// Cargar el recurso solicitado cuando se haga 'clic' en el botón
+		document.getElementById('enviar').onclick = loadContent;
+	}
 	
-	if (window.XMLHttpRequest){
-		var solicitud = new XMLHttpRequest();// creo la var de la solicitud
+	function loadContent() {
+		// Borrar datos anteriores
+		document.getElementById('contenidos').innerHTML = "";
+		document.getElementById('estados').innerHTML = "";
+
+		// Instanciar objeto XMLHttpRequest
+		if(window.XMLHttpRequest) {
+		peticion = new XMLHttpRequest();
+		}
+			else {
+				peticion = new ActiveXObject("Microsoft.XMLHTTP");
+		}
+
+		// Preparar función de respuesta
+		peticion.onreadystatechange = showContent;
+
+		// Realizar petición
+		initTime = new Date();
+		
+		var recurso = document.getElementById('recurso').value;
+		
+		peticion.open('GET', recurso+'?nocache='+Math.random(), true);
+		peticion.send(null);
 	}
-	solicitud.onreadystatechange= mostrar_contenido;// onreadystatement es una func que se ejecuta cdo cambia el estado
-	tiempo_inic= new Date();
-	var recurso=document.getElementById("recurso").value;
-	solicitud.open("GET",recurso,true); // se realiza la petición
-	solicitud.send(null);
-}
+	
+	function showContent() {
+		var finalTime = new Date();
+		var milisegundos = finalTime - initTime;
 
-function mostrar_contenido(){
-	var tiempo_final= new Date();
-	var dif_tiempo= tiempo_final-tiempo_inic;
-	var estados=getElementById("estados");
-	estados.innerHTML+="["+dif_tiempo+" mseg.]"+states[solicitud.readyState]+ "</br>";
-	if (solicitud.readyState == 4 && solicitud.status == 200) {
-		var contenidos=document.getElementById("contenidos");
-		contenidos.innerHTML=solicitud.responseText;
+		var estados = document.getElementById('estados');
+		estados.innerHTML += "[" + milisegundos + " mseg.] " + states[peticion.readyState] + "<br/>";
+
+		if(peticion.readyState == 4) {
+			if(peticion.status == 200) {
+				var contenidos = document.getElementById('contenidos');
+				contenidos.innerHTML = peticion.responseText.transformaCaracteresEspeciales();
+			}
+			showHeads();
+			showStateCod();
+		}
 	}
-	cargar_cabeceras();
-	carga_contenido();
- }
-
-function cargar_cabeceras(){
-	var cabeceras=document.getElementById("cabeceras");
-	cabeceras.innerHTML= solicitud.getAllResponseHeaders();
-};
-
-function mostrar_secundario(){
-	var codigo=document.getElementById("codigo");
-	codigo.innerHTML=solicitud.status+"</br>"+solicitud.statusText;
-
-}
+	
+	function showHeads() {
+		var cabeceras = document.getElementById('cabeceras');
+		cabeceras.innerHTML = peticion.getAllResponseHeaders().transformaCaracteresEspeciales();
+	}
+	
+	function showStateCod() {
+		var codigo = document.getElementById('codigo');
+		codigo.innerHTML = peticion.status + "<br/>" + peticion.statusText;
+	}
