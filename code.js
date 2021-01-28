@@ -14,8 +14,8 @@ function carga_contenido() {
 	//limpio los contenedores
 	document.getElementById("contenidos").innerHTML="";
 	document.getElementById("cabeceras").innerHTML="";
-	document.getElementById("estados").innerHTML="";
-	document.getElementById("codigo").innerHTML="";
+	//document.getElementById("estados").innerHTML="";
+	//document.getElementById("codigo").innerHTML="";
 	
 	if (window.XMLHttpRequest){
 		var solicitud = new XMLHttpRequest();// creo la var de la solicitud
