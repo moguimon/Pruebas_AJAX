@@ -37,7 +37,7 @@ function cargar_url() {
 	var recurso = document.getElementById('recurso').value;
 		
 	solicitud.open('GET', recurso+'?nocache='+Math.random(), true);
-	solicitud.send(null);
+	//solicitud.send(null);
 }
 	
 function muestra_contenido() {
