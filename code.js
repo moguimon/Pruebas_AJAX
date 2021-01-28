@@ -44,7 +44,7 @@ function muestra_contenido() {
 	var tiempo_fin = new Date();
 	var dif_tiempo = tiempo_fin-tiempo_inic;
 	var estados = document.getElementById('estados');
-	estados.innerHTML += "[" + dif_tiempo + " mseg.] " + states[solicitud.readyState] + "<br/>";
+	estados.innerHTML += "[" + dif_tiempo + " mseg.] " + estados[solicitud.readyState] + "<br/>";
 	if(solicitud.readyState == 4) {
 		if(peticion.status == 200) {
 			var contenidos = document.getElementById('contenidos');
