@@ -45,6 +45,6 @@ function cargar_cabeceras(){
 
 function mostrar_secundario(){
 	var codigo=document.getElementById("codigo");
-	codigo.innerHTML=solicitud.status+</br>+solicitud.statusText;
+	codigo.innerHTML=solicitud.status+"</br>"+solicitud.statusText;
 
 }
