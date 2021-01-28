@@ -1,10 +1,10 @@
 // Se quitan los caracteres especiales
-/*String.prototype.transformaCaracteresEspeciales = function() {
+String.prototype.transformaCaracteresEspeciales = function() {
 		return unescape(escape(this).
             replace(/%0A/g, '<br/>').
             replace(/%3C/g, '&lt;').
             replace(/%3E/g, '&gt;'));
-}*/
+}
 	var states = ['No inicializado', 'Cargando', 'Cargado', 'Interactivo', 'Completado'];
 	var initTime = 0;
   
@@ -52,7 +52,7 @@
 		if(peticion.readyState == 4) {
 			if(peticion.status == 200) {
 				var contenidos = document.getElementById('contenidos');
-				contenidos.innerHTML = peticion.responseText//.transformaCaracteresEspeciales();
+				contenidos.innerHTML = peticion.responseText.transformaCaracteresEspeciales();
 			}
 			showHeads();
 			showStateCod();
@@ -61,7 +61,7 @@
 	
 	function showHeads() {
 		var cabeceras = document.getElementById('cabeceras');
-		cabeceras.innerHTML = peticion.getAllResponseHeaders()//.transformaCaracteresEspeciales();
+		cabeceras.innerHTML = peticion.getAllResponseHeaders().transformaCaracteresEspeciales();
 	}
 	
 	function showStateCod() {
