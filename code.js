@@ -5,66 +5,66 @@ String.prototype.transformaCaracteresEspeciales = function() {
             replace(/%3C/g, '&lt;').
             replace(/%3E/g, '&gt;'));
 }
-	var states = ['No inicializado', 'Cargando', 'Cargado', 'Interactivo', 'Completado'];
-	var initTime = 0;
+	var estados = ['No inicializado', 'Cargando', 'Cargado', 'Interactivo', 'Completado'];
+	var tiempo_inic = 0;
   
-	window.onload = function() {
+	window.onload  function() {
 		// Cargar la URL de la página en el campo Text
 		var recurso = document.getElementById('recurso');
 		recurso.value = location.href;
 
 		// Cargar el recurso solicitado cuando se haga 'clic' en el botón
-		document.getElementById('enviar').onclick = loadContent;
+		document.getElementById('enviar').onclick = cargar_url;
 	}
 	
-	function loadContent() {
-		// Borrar datos anteriores
+	function cargar_url() {
+		// Borra lo que hay en los contenedores
 		document.getElementById('contenidos').innerHTML = "";
 		document.getElementById('estados').innerHTML = "";
 
-		// Instanciar objeto XMLHttpRequest
+		// Creo el XHR y realizo la solicitud al servidor
 		if(window.XMLHttpRequest) {
-		peticion = new XMLHttpRequest();
+			solicitud = new XMLHttpRequest();
 		}
 			else {
-				peticion = new ActiveXObject("Microsoft.XMLHTTP");
+				solicitud= new ActiveXObject("Microsoft.XMLHTTP");
 		}
 
 		// Preparar función de respuesta
-		peticion.onreadystatechange = showContent;
+		solicitud.onreadystatechange = muestra_contenido();
 
 		// Realizar petición
-		initTime = new Date();
+		tiempo_inic = new Date();
 		
 		var recurso = document.getElementById('recurso').value;
 		
-		peticion.open('GET', recurso+'?nocache='+Math.random(), true);
-		peticion.send(null);
+		solicitud.open('GET', recurso+'?nocache='+Math.random(), true);
+		solicitud.send(null);
 	}
 	
-	function showContent() {
-		var finalTime = new Date();
-		var milisegundos = finalTime - initTime;
+	function muestra_contenido() {
+		var tiempo_fin = new Date();
+		var dif_tiempo = tiempo_fin-tiempo_inic;
 
 		var estados = document.getElementById('estados');
-		estados.innerHTML += "[" + milisegundos + " mseg.] " + states[peticion.readyState] + "<br/>";
+		estados.innerHTML += "[" + dif_tiempo + " mseg.] " + states[solicitud.readyState] + "<br/>";
 
-		if(peticion.readyState == 4) {
+		if(solicitud.readyState == 4) {
 			if(peticion.status == 200) {
 				var contenidos = document.getElementById('contenidos');
-				contenidos.innerHTML = peticion.responseText.transformaCaracteresEspeciales();
+				contenidos.innerHTML = solicitud.responseText.transformaCaracteresEspeciales();
 			}
-			showHeads();
-			showStateCod();
+			muestra_cabeceras();
+			muestra_estado();
 		}
 	}
 	
-	function showHeads() {
+	function muestra_cabeceras() {
 		var cabeceras = document.getElementById('cabeceras');
-		cabeceras.innerHTML = peticion.getAllResponseHeaders().transformaCaracteresEspeciales();
+		cabeceras.innerHTML = solicitud.getAllResponseHeaders().transformaCaracteresEspeciales();
 	}
 	
-	function showStateCod() {
+	function muestra_estado() {
 		var codigo = document.getElementById('codigo');
-		codigo.innerHTML = peticion.status + "<br/>" + peticion.statusText;
+		codigo.innerHTML = solicitud.status + "<br/>" + solicitud.statusText;
 	}
