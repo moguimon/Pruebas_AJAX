@@ -11,8 +11,8 @@ function carga_contenido() {
 	//limpio los contenedores
 	document.getElementById("contenidos").innerHTML="";
 	document.getElementById("cabeceras").innerHTML="";
-	document.getElementById("estados")="".innerHTML;
-	document.getElementById("codigo")="".innerHTML;
+	document.getElementById("estados").innerHTML="";
+	document.getElementById("codigo").innerHTML="";
 	var solicitud = new XMLHttpRequest();// creo la var de la solicitud
 	
 	solicitud.onreadystatechange= function() { // onreadystatement es una func que se ejecuta cdo cambia el estado
