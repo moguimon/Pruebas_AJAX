@@ -1,8 +1,10 @@
 // definimos las variables que vamos a usar
-var estados=["No inicializada","Cargando","Cargado","Completada"] // Estados de la petición
+var estados=["No inicializada","Cargando","Cargado","Interactivo","Completada"] // Estados de la petición
 var tiempo_inic=0;
 
 window.onload= function(){
+	var recurso=document.getElementById("recurso");
+	recurso.value=location.href;
 	document.getElementById("enviar").onclick = carga_contenido;// Cargar la URL al hacer click al botón enviar
 }
 
@@ -13,16 +15,16 @@ function carga_contenido() {
 	document.getElementById("cabeceras").innerHTML="";
 	document.getElementById("estados").innerHTML="";
 	document.getElementById("codigo").innerHTML="";
-	var solicitud = new XMLHttpRequest();// creo la var de la solicitud
 	
-	solicitud.onreadystatechange= function() { // onreadystatement es una func que se ejecuta cdo cambia el estado
+	if (window.XMLHttpRequest){
+		var solicitud = new XMLHttpRequest();// creo la var de la solicitud
+	}
+	solicitud.onreadystatechange= mostrar_contenido;// onreadystatement es una func que se ejecuta cdo cambia el estado
 	tiempo_inic= new Date();
 	var recurso=document.getElementById("recurso").value;
 	solicitud.open("GET",recurso+"?nocache"+Math.ramdom(),true); // se realiza la petición
 	solicitud.send(null);
 	}
-
-
 
 	function mostrar_contenido(){
 		var tiempo_final= new Date();
