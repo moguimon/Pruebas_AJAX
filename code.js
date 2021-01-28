@@ -8,7 +8,7 @@ String.prototype.transformaCaracteresEspeciales = function() {
 	var estados = ['No inicializado', 'Cargando', 'Cargado', 'Interactivo', 'Completado'];
 	var tiempo_inic = 0;
   
-window.onload  function() {
+window.onload=function() {
 	// Cargar la URL de la página en el campo Text
 	var recurso = document.getElementById('recurso');
 	recurso.value = location.href;
