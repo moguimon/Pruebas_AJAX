@@ -24,21 +24,20 @@ function carga_contenido() {
 	var recurso=document.getElementById("recurso").value;
 	solicitud.open("GET",recurso+"?nocache"+Math.ramdom(),true); // se realiza la petición
 	solicitud.send(null);
-	}
-
-	function mostrar_contenido(){
-		var tiempo_final= new Date();
-		var dif_tiempo= tiempo_final-tiempo_inic;
-		var estados=getElementById("estados");
-		estados.innerHTML+="["+dif_tiempo+" mseg.]"+states[solicitud.readyState]+ "</br>";
-		if (solicitud.readyState == 4 && solicitud.status == 200) {
-			var contenidos=document.getElementById("contenidos");
-			contenidos.innerHTML=solicitud.responseText;
-		}
-		cargar_cabeceras();
-		carga_contenido();
-  }
 }
+
+function mostrar_contenido(){
+	var tiempo_final= new Date();
+	var dif_tiempo= tiempo_final-tiempo_inic;
+	var estados=getElementById("estados");
+	estados.innerHTML+="["+dif_tiempo+" mseg.]"+states[solicitud.readyState]+ "</br>";
+	if (solicitud.readyState == 4 && solicitud.status == 200) {
+		var contenidos=document.getElementById("contenidos");
+		contenidos.innerHTML=solicitud.responseText;
+	}
+	cargar_cabeceras();
+	carga_contenido();
+ }
 
 function cargar_cabeceras(){
 	var cabeceras=document.getElementById("cabeceras");
