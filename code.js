@@ -1,13 +1,21 @@
-// Se quitan los caracteres especiales
+// Función que pone a la espera nuestro código JavaScript, antes de que cargue la página web
+// en este caso pone a la espera la librería JQuery
+// Para hacer referencia a elementos que están en el body, que cargan después
+$(document).ready(function() {
+	document.getElementeById("contenidos").addEventListener("click",cargar_url,false);
+});
 
-String.prototype.transformaCaracteresEspeciales = function(){
+
+
+var estados=['No inicializado', 'Cargando', 'Cargado', 'Interactivo', 'Completado'];
+var tiempo_inic = 0;
+
+//Se quitan los caracteres especiales
+/*String.prototype.transformaCaracteresEspeciales = function(){
 	return unescape(escape(this).replace(/%0A/g, '<br/>').replace(/%3C/g, '&lt;').replace(/%3E/g, '&gt;'));
 }
 
-
-	var estados = ['No inicializado', 'Cargando', 'Cargado', 'Interactivo', 'Completado'];
-	var tiempo_inic = 0;
-  
+/*  
 window.onload=function() {
 	// Cargar la URL de la página en el campo Text
 	var recurso = document.getElementById('recurso');
@@ -15,12 +23,12 @@ window.onload=function() {
 		// Cargar el recurso solicitado cuando se haga 'clic' en el botón
 	document.getElementById('enviar').onclick = cargar_url;
 }
-	
+*/	
 function cargar_url() {
 	// Borra lo que hay en los contenedores
 	document.getElementById('contenidos').innerHTML = "";
 	document.getElementById('estados').innerHTML = "";
-		// Creo el XHR y realizo la solicitud al servidor
+	// Creo el XHR y realizo la solicitud al servidor
 	if(window.XMLHttpRequest) {
 		solicitud = new XMLHttpRequest();
 	}
@@ -48,7 +56,7 @@ function muestra_contenido() {
 	if(solicitud.readyState == 4) {
 		if(peticion.status == 200) {
 			var contenidos = document.getElementById('contenidos');
-			contenidos.innerHTML = solicitud.responseText.transformaCaracteresEspeciales();
+			contenidos.innerHTML = solicitud.responseText;//.transformaCaracteresEspeciales();
 		}
 		muestra_cabeceras();
 		muestra_estado();
@@ -57,7 +65,7 @@ function muestra_contenido() {
 	
 function muestra_cabeceras() {
 	var cabeceras = document.getElementById('cabeceras');
-	cabeceras.innerHTML = solicitud.getAllResponseHeaders().transformaCaracteresEspeciales();
+	cabeceras.innerHTML = solicitud.getAllResponseHeaders();//.transformaCaracteresEspeciales();
 }
 	
 function muestra_estado() {
