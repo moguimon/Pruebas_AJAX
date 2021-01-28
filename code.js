@@ -18,7 +18,7 @@ function carga_contenido() {
 	solicitud.onreadystatechange= function() { // onreadystatement es una func que se ejecuta cdo cambia el estado
 	tiempo_inic= new Date();
 	var recurso=document.getElementById("recurso").value;
-	solicitud.open("GET",recurso,true); // se realiza la petición
+	solicitud.open("GET",recurso+"?nocache"+Math.ramdom(),true); // se realiza la petición
 	solicitud.send(null);
 	}
 
